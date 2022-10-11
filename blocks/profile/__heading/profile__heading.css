@@ -3,3 +3,9 @@
   margin-top: 22.25px;
   margin-bottom: 14px;
 }
+
+@media all and (min-width: 918px) {
+  .profile__heading {
+    margin-top: 0;
+  }
+}

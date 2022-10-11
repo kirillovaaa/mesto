@@ -1,0 +1,11 @@
+.places__name {
+  color: #000000;
+  line-height: 29.05px;
+  font-size: 24px;
+  font-family: "Inter-Black";
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1;
+}

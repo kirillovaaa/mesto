@@ -5,3 +5,12 @@
   line-height: 16.94px;
   height: 14px;
 }
+
+@media all and (min-width: 918px) {
+  .profile__description {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: left;
+    height: 18px;
+  }
+}

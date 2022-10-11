@@ -8,3 +8,10 @@
   max-width: 282px;
   width: 100%;
 }
+
+@media all and (min-width: 918px) {
+  .profile {
+    max-width: 880px;
+    flex-direction: row;
+  }
+}
