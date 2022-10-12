@@ -2,6 +2,7 @@ let popupBg = document.querySelector('.popup__bg'); // Фон попап окн�
 let popup = document.querySelector('.popup'); // Само окно
 let openPopupButton = document.querySelector('.profile__edit-button'); // Кнопки для показа окна
 let closePopupButton = document.querySelector('.popup__close-button'); // Кнопка для скрытия окна
+let savePopupButton = document.querySelector('.popup__save-button');
 
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
@@ -15,10 +16,17 @@ function openPopup() {
   inputProfileName.value = profileName.textContent;
   inputProfileDescription.value = profileDescription.textContent;
 }
-function closePopup() {
+function closePopup(e) {
+  e.preventDefault();
   popupBg.style = 'visibility: hidden';
+}
+
+function closeAndSave(e) {
+  closePopup(e);
+  profileName.textContent = inputProfileName.value;
+  profileDescription.textContent = inputProfileDescription.value;
 }
 
 openPopupButton.addEventListener('click', openPopup);
 closePopupButton.addEventListener('click', closePopup);
-
+savePopupButton.addEventListener('click', closeAndSave);
