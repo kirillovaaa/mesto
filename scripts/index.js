@@ -1,28 +1,26 @@
 let popupBg = document.querySelector('.popup'); // Весь попап с фоном
-let editForm = document.querySelector('.popup__form'); // Форма редактирования
+let editForm = document.forms.profile; // Форма редактирования
 let openPopupButton = document.querySelector('.profile__edit-button'); // Кнопки для показа окна
 let closePopupButton = document.querySelector('.popup__close-button'); // Кнопка для скрытия окна
 
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
-let inputProfileName = document.querySelector('.popup__input-name');
-let inputProfileDescription = document.querySelector('.popup__input-description');
 
 function openPopup() {
-  popupBg.style = 'visibility: initial';
-  inputProfileName.value = profileName.textContent;
-  inputProfileDescription.value = profileDescription.textContent;
+  popupBg.classList.add('popup_opened');
+  editForm.elements.name.value = profileName.textContent;
+  editForm.elements.description.value = profileDescription.textContent;
 }
 
-function closePopup(e) {
-  e.preventDefault();
-  popupBg.style = 'visibility: hidden';
+function closePopup() {
+  popupBg.classList.remove('popup_opened');
 }
 
 function closeAndSave(e) {
-  profileName.textContent = inputProfileName.value;
-  profileDescription.textContent = inputProfileDescription.value;
-  closePopup(e);
+  e.preventDefault();
+  profileName.textContent = editForm.elements.name.value;
+  profileDescription.textContent = editForm.elements.description.value;
+  closePopup();
 }
 
 

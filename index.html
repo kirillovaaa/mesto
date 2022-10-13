@@ -12,26 +12,15 @@
     <!-- header block -->
     <header class="header">
       <img class="header__logo" src="./images/logo.svg" alt="Место" />
-      <div class="header__line"></div>
     </header>
     <main>
       <div class="popup">
-        <form class="popup__form">
+        <form class="popup__form" name="profile">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <input
-            class="popup__input popup__input-name"
-            type="text"
-            name="name"
-            value=""
-          />
-          <input
-            class="popup__input popup__input-description"
-            type="text"
-            name="description"
-            value=""
-          />
+          <input class="popup__input" type="text" name="name" value="" />
+          <input class="popup__input" type="text" name="description" value="" />
           <button type="submit" class="popup__save-button">Сохранить</button>
-          <button class="popup__close-button">
+          <button class="popup__close-button" type="button">
             <img
               class="popup__close-icon"
               src="./images/close.svg"
@@ -47,7 +36,7 @@
         <div class="profile__info">
           <div class="profile__heading">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button type="submit" class="profile__edit-button">
+            <button type="button" class="profile__edit-button">
               <img
                 class="profile__edit-icon"
                 src="./images/edit.svg"
@@ -57,7 +46,7 @@
           </div>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button class="profile__add-button">
+        <button class="profile__add-button" type="button">
           <img class="profile__add-icon" src="./images/plus.svg" alt="Плюс" />
         </button>
       </section>
@@ -70,8 +59,8 @@
             alt="Бурятия"
           />
           <div class="places__name-wrapper">
-            <h3 class="places__name">Бурятия</h3>
-            <button class="places__fav-button"></button>
+            <h2 class="places__name">Бурятия</h2>
+            <button class="places__fav-button" type="button"></button>
           </div>
         </div>
 
@@ -82,22 +71,22 @@
             alt="Геленджик"
           />
           <div class="places__name-wrapper">
-            <h3 class="places__name">Геленджик</h3>
-            <button class="places__fav-button"></button>
+            <h2 class="places__name">Геленджик</h2>
+            <button class="places__fav-button" type="button"></button>
           </div>
         </div>
         <div class="places__item">
           <img class="places__image" src="./images/moscow.jpg" alt="Москва" />
           <div class="places__name-wrapper">
-            <h3 class="places__name">Москва</h3>
-            <button class="places__fav-button"></button>
+            <h2 class="places__name">Москва</h2>
+            <button class="places__fav-button" type="button"></button>
           </div>
         </div>
         <div class="places__item">
           <img class="places__image" src="./images/sochi.jpg" alt="Сочи" />
           <div class="places__name-wrapper">
-            <h3 class="places__name">Сочи</h3>
-            <button class="places__fav-button"></button>
+            <h2 class="places__name">Сочи</h2>
+            <button class="places__fav-button" type="button"></button>
           </div>
         </div>
         <div class="places__item">
@@ -107,22 +96,22 @@
             alt="Санкт_Петербург"
           />
           <div class="places__name-wrapper">
-            <h3 class="places__name">Санкт-Петербург</h3>
-            <button class="places__fav-button"></button>
+            <h2 class="places__name">Санкт-Петербург</h2>
+            <button class="places__fav-button" type="button"></button>
           </div>
         </div>
         <div class="places__item">
           <img class="places__image" src="./images/kazan.jpg" alt="Казань" />
           <div class="places__name-wrapper">
-            <h3 class="places__name">Казань</h3>
-            <button class="places__fav-button"></button>
+            <h2 class="places__name">Казань</h2>
+            <button class="places__fav-button" type="button"></button>
           </div>
         </div>
       </section>
     </main>
     <footer class="footer">
-      <span class="footer__copyright">© 2020 Mesto Russia</span>
+      <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <script src="./main.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>

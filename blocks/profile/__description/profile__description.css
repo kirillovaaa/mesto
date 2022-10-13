@@ -3,7 +3,6 @@
   margin: 0;
   font-size: 14px;
   line-height: 16.94px;
-  height: 14px;
 }
 
 @media all and (min-width: 918px) {
@@ -11,6 +10,5 @@
     font-size: 18px;
     line-height: 22px;
     text-align: left;
-    height: 18px;
   }
 }

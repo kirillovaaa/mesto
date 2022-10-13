@@ -1,7 +1,6 @@
 .places__item {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
   overflow: hidden;
   border-radius: 10px;
 }
