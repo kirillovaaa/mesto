@@ -14,9 +14,6 @@
     font-size: 18px;
     line-height: 22px;
     text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
     max-width: 360px;
   }
 }
