@@ -14,13 +14,36 @@
       <img class="header__logo" src="./images/logo.svg" alt="Место" />
     </header>
     <main>
-      <div class="popup">
+      <div class="popup" id="popup-profile">
         <form class="popup__form" name="profile">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <input class="popup__input" type="text" name="name" value="" />
           <input class="popup__input" type="text" name="description" value="" />
           <button type="submit" class="popup__save-button">Сохранить</button>
-          <button class="popup__close-button" type="button">
+          <button
+            class="popup__close-button"
+            type="button"
+            id="popup-profile-close"
+          >
+            <img
+              class="popup__close-icon"
+              src="./images/close.svg"
+              alt="Закрыть"
+            />
+          </button>
+        </form>
+      </div>
+      <div class="popup" id="popup-place">
+        <form class="popup__form" name="place">
+          <h2 class="popup__heading">Новое место</h2>
+          <input class="popup__input" type="text" name="name" value="" />
+          <input class="popup__input" type="text" name="link" value="" />
+          <button type="submit" class="popup__save-button">Создать</button>
+          <button
+            class="popup__close-button"
+            type="button"
+            id="popup-place-close"
+          >
             <img
               class="popup__close-icon"
               src="./images/close.svg"

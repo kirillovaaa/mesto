@@ -1,38 +1,64 @@
-let popupBg = document.querySelector('.popup'); // Весь попап с фоном
-let openPopupButton = document.querySelector('.profile__edit-button'); // Кнопки для показа окна
-let closePopupButton = document.querySelector('.popup__close-button'); // Кнопка для скрытия окна
+let popupProfile = document.querySelector('#popup-profile'); // Весь попап с фоном
+let popupPlace = document.querySelector('#popup-place');
+let openPopupProfileButton = document.querySelector('.profile__edit-button'); // Кнопки для показа окна
+let openPopupPlaceButton = document.querySelector('.profile__add-button'); // Кнопки для показа окна
+let closePopupProfileButton = document.querySelector('#popup-profile-close'); // Кнопка для скрытия окна
+let closePopupPlaceButton = document.querySelector('#popup-place-close'); // Кнопка для скрытия окна
 
 let places = document.querySelector('.places');
 
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 
-let editForm = document.forms.profile;
-let inputName = editForm.elements.name;
-let inputDescription = editForm.elements.description;
+let editProfileForm = document.forms.profile;
+let inputName = editProfileForm.elements.name;
+let inputDescription = editProfileForm.elements.description;
 
+let addPlaceForm = document.forms.place;
 
-function openPopup() {
-  popupBg.classList.add('popup_opened');
+function openPopupProfile() {
+  popupProfile.classList.add('popup_opened');
   inputName.value = profileName.textContent;
   inputDescription.value = profileDescription.textContent;
 }
 
-function closePopup() {
-  popupBg.classList.remove('popup_opened');
+function closePopupProfile() {
+  popupProfile.classList.remove('popup_opened');
 }
 
-function closeAndSave(e) {
-  profileName.textContent = inputName.value;
+function openPopupPlace() {
+  popupPlace.classList.add('popup_opened');
+}
+
+function closePopupPlace() {
+  popupPlace.classList.remove('popup_opened');
+}
+
+function closeAndSaveProfile(e) {
   e.preventDefault();
+  profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
-  closePopup();
+  closePopupProfile();
 }
 
+function closeAndSavePlace(e) {
+  e.preventDefault();
+  let name = addPlaceForm.elements.name.value;
+  let link = addPlaceForm.elements.link.value;
+  let place = { name, link };
+  addPlaceToGrid(place);
+  closePopupPlace();
+}
 
-openPopupButton.addEventListener('click', openPopup);
-closePopupButton.addEventListener('click', closePopup);
-editForm.addEventListener('submit', closeAndSave);
+openPopupProfileButton.addEventListener('click', openPopupProfile);
+openPopupPlaceButton.addEventListener('click', openPopupPlace);
+
+
+closePopupProfileButton.addEventListener('click', closePopupProfile);
+closePopupPlaceButton.addEventListener('click', closePopupPlace);
+
+editProfileForm.addEventListener('submit', closeAndSaveProfile);
+addPlaceForm.addEventListener('submit', closeAndSavePlace);
 
 const initialPlaces = [
   {
@@ -86,7 +112,7 @@ function addPlaceToGrid(place) {
 
   nameWrapper.append(name, favButton); // добавляем в nameWrapper name и favButton
   placeItem.append(image, nameWrapper); // добавляем в placesItem image и nameWrapper
-  places.append(placeItem); //добавляем в places placeItem 
+  places.prepend(placeItem); //добавляем в places placeItem 
 }
  
 initialPlaces.forEach(addPlaceToGrid);
