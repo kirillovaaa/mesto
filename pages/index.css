@@ -19,6 +19,7 @@
 
 @import url(../blocks/places/places.css);
 @import url(../blocks/places/__fav-button/places__fav-button.css);
+@import url(../blocks/places/__fav-button/_selected/places__fav-button_selected.css);
 @import url(../blocks/places/__item/places__item.css);
 @import url(../blocks/places/__name-wrapper/places__name-wrapper.css);
 @import url(../blocks/places/__name/places__name.css);
