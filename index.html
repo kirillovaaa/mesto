@@ -33,11 +33,22 @@
           </button>
         </form>
       </div>
+
       <div class="popup" id="popup-place">
         <form class="popup__form" name="place">
           <h2 class="popup__heading">Новое место</h2>
-          <input class="popup__input" type="text" name="name" value="" />
-          <input class="popup__input" type="text" name="link" value="" />
+          <input
+            class="popup__input"
+            type="text"
+            name="name"
+            value="Название"
+          />
+          <input
+            class="popup__input"
+            type="text"
+            name="link"
+            value="Ссылка на картинку"
+          />
           <button type="submit" class="popup__save-button">Создать</button>
           <button
             class="popup__close-button"
@@ -51,6 +62,24 @@
             />
           </button>
         </form>
+      </div>
+
+      <div class="popup" id="popup-image">
+        <div class="popup__image-wrapper">
+          <img class="popup__image" src="" />
+          <p class="popup__image-description"></p>
+          <button
+            class="popup__close-button"
+            type="button"
+            id="popup-image-close"
+          >
+            <img
+              class="popup__close-icon"
+              src="./images/close.svg"
+              alt="Закрыть"
+            />
+          </button>
+        </div>
       </div>
 
       <!-- profile block -->
