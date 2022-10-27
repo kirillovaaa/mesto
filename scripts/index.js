@@ -123,7 +123,7 @@ function addPlaceToGrid(place) {
   const deleteButton = document.createElement("button"); //кнопка урны
   const deleteIcon = document.createElement("img"); // создание иконки
   deleteButton.append(deleteIcon); // в кнопку удаления добавляем иконку
-  deleteIcon.src = "../images/delete.svg"; // адрес картинки
+  deleteIcon.src = "./images/delete.svg"; // адрес картинки
   deleteButton.type = "button"; // тип кнопки
   deleteButton.classList.add("places__delete-button"); //подключаем стиль
   deleteIcon.classList.add("places__delete-icon");
