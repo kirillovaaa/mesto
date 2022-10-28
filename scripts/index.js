@@ -1,46 +1,41 @@
-let popupProfile = document.querySelector("#popup-profile"); // Весь попап с фоном
-let popupPlace = document.querySelector("#popup-place");
-let popupImage = document.querySelector("#popup-image");
-let popupImageLarge = document.querySelector(".popup__image");
-let openPopupProfileButton = document.querySelector(".profile__edit-button"); // Кнопки для показа окна
-let openPopupPlaceButton = document.querySelector(".profile__add-button"); // Кнопки для показа окна
-let closePopupProfileButton = document.querySelector("#popup-profile-close"); // Кнопка для скрытия окна
-let closePopupPlaceButton = document.querySelector("#popup-place-close"); // Кнопка для скрытия картинки
-let popupImageDescription = document.querySelector(".popup__image-description"); // Информация
+const popupProfile = document.querySelector("#popup-profile"); // Весь попап с фоном
+const popupPlace = document.querySelector("#popup-place");
+const popupImage = document.querySelector("#popup-image");
+const popupImageLarge = document.querySelector(".popup__image");
+const popupOpenProfileButton = document.querySelector(".profile__edit-button"); // Кнопки для показа окна
+const popupOpenPlaceButton = document.querySelector(".profile__add-button"); // Кнопки для показа окна
+const popupCloseProfileButton = document.querySelector("#popup-profile-close"); // Кнопка для скрытия окна
+const popupClosePlaceButton = document.querySelector("#popup-place-close"); // Кнопка для скрытия картинки
+const popupImageDescription = document.querySelector(
+  ".popup__image-description"
+); // Информация
+
 //
-let closePopupImageButton = document.querySelector("#popup-image-close");
+const closePopupImageButton = document.querySelector("#popup-image-close");
 
-let places = document.querySelector(".places");
+const places = document.querySelector(".places");
 
-let profileName = document.querySelector(".profile__name");
-let profileDescription = document.querySelector(".profile__description");
+const profileName = document.querySelector(".profile__name");
+const profileDescription = document.querySelector(".profile__description");
 
-let editProfileForm = document.forms.profile;
-let inputName = editProfileForm.elements.name;
-let inputDescription = editProfileForm.elements.description;
+const editProfileForm = document.forms.profile;
+const inputName = editProfileForm.elements.name;
+const inputDescription = editProfileForm.elements.description;
 
-let addPlaceForm = document.forms.place;
+const addPlaceForm = document.forms.place;
+
+function openPopup(popupElement) {
+  popupElement.classList.add("popup_opened");
+}
+
+function closePopup(popupElement) {
+  popupElement.classList.remove("popup_opened");
+}
 
 function openPopupProfile() {
-  popupProfile.classList.add("popup_opened");
+  openPopup(popupProfile);
   inputName.value = profileName.textContent;
   inputDescription.value = profileDescription.textContent;
-}
-
-function closePopupProfile() {
-  popupProfile.classList.remove("popup_opened");
-}
-
-function openPopupPlace() {
-  popupPlace.classList.add("popup_opened");
-}
-
-function closePopupPlace() {
-  popupPlace.classList.remove("popup_opened");
-}
-// new
-function closePopupImage() {
-  popupImage.classList.remove("popup_opened");
 }
 
 function closeAndSaveProfile(e) {
@@ -59,13 +54,21 @@ function closeAndSavePlace(e) {
   closePopupPlace();
 }
 
-openPopupProfileButton.addEventListener("click", openPopupProfile);
-openPopupPlaceButton.addEventListener("click", openPopupPlace);
+popupOpenProfileButton.addEventListener("click", openPopupProfile);
+popupOpenPlaceButton.addEventListener("click", function () {
+  openPopup(popupPlace);
+});
 
-closePopupProfileButton.addEventListener("click", closePopupProfile);
-closePopupPlaceButton.addEventListener("click", closePopupPlace);
+popupCloseProfileButton.addEventListener("click", function () {
+  closePopup(popupProfile);
+});
+popupClosePlaceButton.addEventListener("click", function () {
+  closePopup(popupPlace);
+});
 //
-closePopupImageButton.addEventListener("click", closePopupImage);
+closePopupImageButton.addEventListener("click", function () {
+  closePopup(popupImage);
+});
 
 editProfileForm.addEventListener("submit", closeAndSaveProfile);
 addPlaceForm.addEventListener("submit", closeAndSavePlace);
@@ -97,7 +100,14 @@ const initialPlaces = [
   },
 ];
 
-function addPlaceToGrid(place) {
+function renderCard(place) {
+  const card = createCard(place);
+  places.prepend(card);
+}
+
+initialPlaces.forEach(renderCard);
+
+function createCard(place) {
   const placeItem = document.createElement("div"); //создать элемент
   placeItem.classList.add("places__item"); //добавить в класслист (add)
 
@@ -122,7 +132,6 @@ function addPlaceToGrid(place) {
 
   const deleteButton = document.createElement("button"); //кнопка урны
   const deleteIcon = document.createElement("img"); // создание иконки
-  deleteButton.append(deleteIcon); // в кнопку удаления добавляем иконку
   deleteIcon.src = "./images/delete.svg"; // адрес картинки
   deleteButton.type = "button"; // тип кнопки
   deleteButton.classList.add("places__delete-button"); //подключаем стиль
@@ -134,14 +143,14 @@ function addPlaceToGrid(place) {
 
   //открытие попапа на весь экран
   image.addEventListener("click", function () {
-    popupImage.classList.add("popup_opened");
+    openPopup(popupImage);
+    popupImageLarge.alt = place.name;
     popupImageLarge.src = place.link;
     popupImageDescription.textContent = place.name;
   });
 
   nameWrapper.append(name, favButton); // добавляем в nameWrapper name и favButton
+  deleteButton.append(deleteIcon); // в кнопку удаления добавляем иконку
   placeItem.append(image, nameWrapper, deleteButton); // добавляем в placesItem image и nameWrapper
-  places.prepend(placeItem); //добавляем в places placeItem
+  return placeItem;
 }
-
-initialPlaces.forEach(addPlaceToGrid);
