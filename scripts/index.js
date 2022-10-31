@@ -11,18 +11,18 @@ const popupImageDescription = document.querySelector(
 ); // Информация
 
 //
-const closePopupImageButton = document.querySelector("#popup-image-close");
+const popupImageButtonClose = document.querySelector("#popup-image-close");
 
 const places = document.querySelector(".places");
 
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
-const editProfileForm = document.forms.profile;
-const inputName = editProfileForm.elements.name;
-const inputDescription = editProfileForm.elements.description;
+const profileFormEdit = document.forms.profile;
+const inputName = profileFormEdit.elements.name;
+const inputDescription = profileFormEdit.elements.description;
 
-const addPlaceForm = document.forms.place;
+const placeFormAdd = document.forms.place;
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
@@ -30,6 +30,11 @@ function openPopup(popupElement) {
 
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
+}
+
+function addPlaceToGrid(place) {
+  const card = createCard(place);
+  places.prepend(card);
 }
 
 function openPopupProfile() {
@@ -42,16 +47,16 @@ function closeAndSaveProfile(e) {
   e.preventDefault();
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
-  closePopupProfile();
+  closePopup(popupProfile, popupPlace, popupImage);
 }
 
 function closeAndSavePlace(e) {
   e.preventDefault();
-  let name = addPlaceForm.elements.name.value;
-  let link = addPlaceForm.elements.link.value;
+  let name = placeFormAdd.elements.name.value;
+  let link = placeFormAdd.elements.link.value;
   let place = { name, link };
   addPlaceToGrid(place);
-  closePopupPlace();
+  closePopup(popupProfile, popupPlace, popupImage);
 }
 
 popupOpenProfileButton.addEventListener("click", openPopupProfile);
@@ -66,12 +71,12 @@ popupClosePlaceButton.addEventListener("click", function () {
   closePopup(popupPlace);
 });
 //
-closePopupImageButton.addEventListener("click", function () {
+popupImageButtonClose.addEventListener("click", function () {
   closePopup(popupImage);
 });
 
-editProfileForm.addEventListener("submit", closeAndSaveProfile);
-addPlaceForm.addEventListener("submit", closeAndSavePlace);
+profileFormEdit.addEventListener("submit", closeAndSaveProfile);
+placeFormAdd.addEventListener("submit", closeAndSavePlace);
 
 const initialPlaces = [
   {
