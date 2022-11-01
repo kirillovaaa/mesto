@@ -56,7 +56,9 @@ function closeAndSavePlace(e) {
   let link = placeFormAdd.elements.link.value;
   let place = { name, link };
   addPlaceToGrid(place);
-  closePopup(popupProfile, popupPlace, popupImage);
+  closePopup(popupProfile);
+  closePopup(popupPlace);
+  closePopup(popupImage);
 }
 
 popupOpenProfileButton.addEventListener("click", openPopupProfile);
