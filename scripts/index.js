@@ -47,7 +47,7 @@ function closeAndSaveProfile(e) {
   e.preventDefault();
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
-  closePopup(popupProfile, popupPlace, popupImage);
+  closePopup(popupProfile);
 }
 
 function closeAndSavePlace(e) {
@@ -56,9 +56,7 @@ function closeAndSavePlace(e) {
   let link = placeFormAdd.elements.link.value;
   let place = { name, link };
   addPlaceToGrid(place);
-  closePopup(popupProfile);
   closePopup(popupPlace);
-  closePopup(popupImage);
 }
 
 popupOpenProfileButton.addEventListener("click", openPopupProfile);
