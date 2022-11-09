@@ -8,9 +8,8 @@ const popupCloseProfileButton = document.querySelector("#popup-profile-close"); 
 const popupClosePlaceButton = document.querySelector("#popup-place-close"); // Кнопка для скрытия картинки
 const popupImageDescription = document.querySelector(
   ".popup__image-description"
-); // Информация
+);
 
-//
 const popupImageButtonClose = document.querySelector("#popup-image-close");
 
 const places = document.querySelector(".places");
@@ -18,11 +17,17 @@ const places = document.querySelector(".places");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
+//форма профиля
 const profileFormEdit = document.forms.profile;
+//поля формы профиля
 const inputName = profileFormEdit.elements.name;
 const inputDescription = profileFormEdit.elements.description;
 
+// форма добавления места
 const placeFormAdd = document.forms.place;
+// поля формы добавления места
+const placeNameField = placeFormAdd.elements.name;
+const placeLinkField = placeFormAdd.elements.link;
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
@@ -59,9 +64,31 @@ function closeAndSavePlace(e) {
   closePopup(popupPlace);
 }
 
+function handlePopupOverlayClose(popupElement) {
+  popupElement.children[0].addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+  popupElement.addEventListener("click", () => {
+    closePopup(popupElement);
+  });
+}
+
+handlePopupOverlayClose(popupProfile);
+handlePopupOverlayClose(popupPlace);
+handlePopupOverlayClose(popupImage);
+
 popupOpenProfileButton.addEventListener("click", openPopupProfile);
 popupOpenPlaceButton.addEventListener("click", function () {
   openPopup(popupPlace);
+});
+
+//закрытие попапа на Esc
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closePopup(popupProfile);
+    closePopup(popupPlace);
+    closePopup(popupImage);
+  }
 });
 
 popupCloseProfileButton.addEventListener("click", function () {

@@ -17,8 +17,35 @@
       <div class="popup" id="popup-profile">
         <form class="popup__form" name="profile">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <input class="popup__input" type="text" name="name" value="" />
-          <input class="popup__input" type="text" name="description" value="" />
+          <div class="popup__input-wrapper">
+            <input
+              id="edit-name-field"
+              class="popup__input"
+              type="text"
+              name="name"
+              placeholder="Имя"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span id="edit-name-field-error" class="popup__input-error"></span>
+          </div>
+          <div class="popup__input-wrapper">
+            <input
+              id="edit-description-field"
+              class="popup__input"
+              type="text"
+              name="description"
+              placeholder="О себе"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span
+              id="edit-description-field-error"
+              class="popup__input-error"
+            ></span>
+          </div>
           <button type="submit" class="popup__save-button">Сохранить</button>
           <button
             class="popup__close-button"
@@ -37,18 +64,36 @@
       <div class="popup" id="popup-place">
         <form class="popup__form" name="place">
           <h2 class="popup__heading">Новое место</h2>
-          <input
-            class="popup__input"
-            type="text"
-            name="name"
-            placeholder="Название"
-          />
-          <input
-            class="popup__input"
-            type="text"
-            name="link"
-            placeholder="Ссылка на картинку"
-          />
+          <div class="popup__input-wrapper">
+            <input
+              id="add-place-name-field"
+              class="popup__input"
+              type="text"
+              name="name"
+              placeholder="Название"
+              minlength="2"
+              maxlength="30"
+              required
+            />
+            <span
+              id="add-place-name-field-error"
+              class="popup__input-error"
+            ></span>
+          </div>
+          <div class="popup__input-wrapper">
+            <input
+              id="add-place-link-field"
+              class="popup__input"
+              type="url"
+              name="link"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span
+              id="add-place-link-field-error"
+              class="popup__input-error"
+            ></span>
+          </div>
           <button type="submit" class="popup__save-button">Создать</button>
           <button
             class="popup__close-button"
@@ -109,5 +154,6 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
