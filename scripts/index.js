@@ -29,12 +29,22 @@ const placeFormAdd = document.forms.place;
 const placeNameField = placeFormAdd.elements.name;
 const placeLinkField = placeFormAdd.elements.link;
 
+//закрытие попапа на Esc
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
+}
+
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
+  document.addEventListener("keydown", closeByEscape);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeByEscape);
 }
 
 function addPlaceToGrid(place) {
@@ -79,16 +89,12 @@ handlePopupOverlayClose(popupImage);
 
 popupOpenProfileButton.addEventListener("click", openPopupProfile);
 popupOpenPlaceButton.addEventListener("click", function () {
+  placeNameField.value = "";
+  placeLinkField.value = "";
+  const saveButton = popupPlace.querySelector(".popup__save-button");
+  saveButton.classList.add("popup__save-button_inactive");
+  saveButton.disabled = true;
   openPopup(popupPlace);
-});
-
-//закрытие попапа на Esc
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closePopup(popupProfile);
-    closePopup(popupPlace);
-    closePopup(popupImage);
-  }
 });
 
 popupCloseProfileButton.addEventListener("click", function () {
