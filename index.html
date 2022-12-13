@@ -15,7 +15,7 @@
     </header>
     <main>
       <div class="popup" id="popup-profile">
-        <form class="popup__form" name="profile">
+        <form id="form-profile" class="popup__form" name="profile">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <div class="popup__input-wrapper">
             <input
@@ -62,7 +62,7 @@
       </div>
 
       <div class="popup" id="popup-place">
-        <form class="popup__form" name="place">
+        <form id="form-place" class="popup__form" name="place">
           <h2 class="popup__heading">Новое место</h2>
           <div class="popup__input-wrapper">
             <input
@@ -153,7 +153,9 @@
     <footer class="footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/validate.js"></script>
+    <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./scripts/Card.js"></script>
+    <script type="module" src="./scripts/FormValidator.js"></script>
+    <script type="module" src="./scripts/Popup.js"></script>
   </body>
 </html>
