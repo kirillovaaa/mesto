@@ -8,19 +8,20 @@ export default class Card {
 
   _createCard() {
     /** Шаблон карточки */
-    const cardTemplate = document.querySelector("#place-card-template").content;
+    const cardTemplate = document.querySelector("#place-card-template").content
+      .firstElementChild;
 
-    /** Изображение в шаблоне карточки */
-    const imageElement = cardTemplate.querySelector(".places__image");
+    /** Карточка */
+    this._element = cardTemplate.cloneNode(true); // клонируем шаблон и сохраняем в класс
+
+    /** Изображение в карточке класса */
+    const imageElement = this._element.querySelector(".places__image");
     imageElement.alt = this._title; // задаем текстовое описание картинки
     imageElement.src = this._imageLink; // задаем источник картинки
 
-    /** Заголовок карточки */
-    const titleElement = cardTemplate.querySelector(".places__name");
+    /** Заголовок в карточке класса */
+    const titleElement = this._element.querySelector(".places__name");
     titleElement.textContent = this._title; // задаем название места
-
-    /** Карточка */
-    this._element = cardTemplate.cloneNode(true); // делаем копию шаблона и сохраняем в класс
   }
 
   _handleImageClick() {
