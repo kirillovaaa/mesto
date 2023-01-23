@@ -7,35 +7,20 @@ export default class Card {
   }
 
   _createCard() {
-    this._element = document.createElement("div"); // создать элемент карточки места
-    this._element.classList.add("places__item"); // применяем к этому элементу стиль
+    /** Шаблон карточки */
+    const cardTemplate = document.querySelector("#place-card-template").content;
 
-    const image = document.createElement("img"); // создать элемент изображения
-    image.classList.add("places__image"); // применить к нему стиль
-    image.alt = this._title; // задать текстовое описание картинки
-    image.src = this._imageLink; // задать источник картинки
+    /** Изображение в шаблоне карточки */
+    const imageElement = cardTemplate.querySelector(".places__image");
+    imageElement.alt = this._title; // задаем текстовое описание картинки
+    imageElement.src = this._imageLink; // задаем источник картинки
 
-    const nameWrapper = document.createElement("div"); // создать обёртку для названия места
-    nameWrapper.classList.add("places__name-wrapper"); // применяем к обёртке стиль
+    /** Заголовок карточки */
+    const titleElement = cardTemplate.querySelector(".places__name");
+    titleElement.textContent = this._title; // задаем название места
 
-    const name = document.createElement("h2"); // создаем элемент заголовка этого места
-    name.classList.add("places__name"); // применяем к нему стиль
-    name.textContent = this._title; // название места из массива
-
-    const favButton = document.createElement("button"); // создаем кнопку-сердечко
-    favButton.classList.add("places__fav-button"); // применяем стиль
-    favButton.type = "button"; // задаем ей тип
-
-    const deleteButton = document.createElement("button"); //кнопка урны
-    const deleteIcon = document.createElement("img"); // создание иконки
-    deleteIcon.src = "./images/delete.svg"; // адрес картинки
-    deleteButton.type = "button"; // тип кнопки
-    deleteButton.classList.add("places__delete-button"); //подключаем стиль
-    deleteIcon.classList.add("places__delete-icon");
-
-    nameWrapper.append(name, favButton); // добавляем в nameWrapper name и favButton
-    deleteButton.append(deleteIcon); // в кнопку удаления добавляем иконку
-    this._element.append(image, nameWrapper, deleteButton); // добавляем в placesItem image и nameWrapper
+    /** Карточка */
+    this._element = cardTemplate.cloneNode(true); // делаем копию шаблона и сохраняем в класс
   }
 
   _handleImageClick() {
