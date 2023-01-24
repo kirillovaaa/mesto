@@ -1,14 +1,15 @@
 import { imagePopup } from "./Popup.js";
 
 export default class Card {
-  constructor(title, imageLink) {
+  constructor(templateSelector, title, imageLink) {
+    this._templateSelector = templateSelector;
     this._title = title;
     this._imageLink = imageLink;
   }
 
   _createCard() {
     /** Шаблон карточки */
-    const cardTemplate = document.querySelector("#place-card-template").content
+    const cardTemplate = document.querySelector(this._templateSelector).content
       .firstElementChild;
 
     /** Карточка */

@@ -104,7 +104,7 @@ profileFormEdit.addEventListener("submit", closeAndSaveProfile);
 placeFormAdd.addEventListener("submit", closeAndSavePlace);
 
 function renderCard(place) {
-  const card = new Card(place.name, place.link);
+  const card = new Card("#place-card-template", place.name, place.link);
   places.prepend(card.generateCard());
 }
 
