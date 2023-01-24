@@ -1,24 +1,5 @@
 import Card from "./Card.js";
-import { placePopup, profilePopup } from "./Popup.js";
 import FormValidator from "./FormValidator.js";
-
-const profileFormValidator = new FormValidator({
-  formSelector: "#form-profile", // id формы
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  errorClass: "popup__input-error_active",
-});
-const placeFormValidator = new FormValidator({
-  formSelector: "#form-place", // id формы
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  errorClass: "popup__input-error_active",
-});
-
-profileFormValidator.enableValidation();
-placeFormValidator.enableValidation();
 
 const initialPlaces = [
   {
@@ -46,6 +27,52 @@ const initialPlaces = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+
+const profileFormValidator = new FormValidator({
+  formSelector: "#form-profile", // id формы
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_inactive",
+  errorClass: "popup__input-error_active",
+});
+
+const placeFormValidator = new FormValidator({
+  formSelector: "#form-place", // id формы
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_inactive",
+  errorClass: "popup__input-error_active",
+});
+
+profileFormValidator.enableValidation();
+placeFormValidator.enableValidation();
+
+/** Попап с формой редактирования профиля */
+const profilePopup = document.querySelector("#popup-profile");
+/** Попап с формой добавления места */
+const placePopup = document.querySelector("#popup-place");
+/** Попап с картинкой */
+export const imagePopup = document.querySelector("#popup-image");
+
+/** Обработчик нажатия на кнопку Esc */
+function handlePressEsc(e) {
+  if (e.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
+}
+
+/** Функция открытия попапа */
+export function openPopup(popupElement) {
+  popupElement.classList.add("popup_opened");
+  document.addEventListener("keydown", handlePressEsc);
+}
+
+/** Функция закрытия попапа */
+function closePopup(popupElement) {
+  popupElement.classList.remove("popup_opened");
+  document.removeEventListener("keydown", handlePressEsc);
+}
 
 const popupOpenProfileButton = document.querySelector(".profile__edit-button"); // Кнопки для показа окна
 const popupOpenPlaceButton = document.querySelector(".profile__add-button"); // Кнопки для показа окна
