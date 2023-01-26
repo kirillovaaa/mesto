@@ -1,6 +1,9 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
+// TODO:
+// 1. Исправить валидацию форм
+
 //
 //
 // Валидаторы форм
@@ -55,6 +58,40 @@ function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
   document.removeEventListener("keydown", handlePressEsc);
 }
+/** Функция обработчика нажатия на фон попапа */
+function handlePopupOverlayClose(popupElement) {
+  popupElement.children[0].addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+  popupElement.addEventListener("click", () => {
+    closePopup(popupElement);
+  });
+}
+// активация слушателей нажатия на фон попапов
+handlePopupOverlayClose(profilePopup);
+handlePopupOverlayClose(placePopup);
+handlePopupOverlayClose(imagePopup);
+
+/** Функция обработчика нажатия на кнопку "закрыть попап" */
+function handleClosePopupButtonClick(popupElement) {
+  closePopup(popupElement);
+}
+// активация слушателей нажатия на закрытие попапов
+profilePopup
+  .querySelector(".popup__close-button")
+  .addEventListener("click", () => {
+    handleClosePopupButtonClick(profilePopup);
+  });
+placePopup
+  .querySelector(".popup__close-button")
+  .addEventListener("click", () => {
+    handleClosePopupButtonClick(placePopup);
+  });
+imagePopup
+  .querySelector(".popup__close-button")
+  .addEventListener("click", () => {
+    handleClosePopupButtonClick(imagePopup);
+  });
 
 //
 //
