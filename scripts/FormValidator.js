@@ -1,16 +1,20 @@
 export default class FormValidator {
   constructor(params) {
-    this._inputSelector = params.inputSelector;
-    this._submitButtonSelector = params.submitButtonSelector;
+    this._element = document.querySelector(params.formSelector); // сама форма
+    this._inputList = Array.from(
+      this._element.querySelectorAll(params.inputSelector)
+    );
+    this._buttonElement = this._element.querySelector(
+      params.submitButtonSelector
+    );
     this._inactiveButtonClass = params.inactiveButtonClass;
     this._errorClass = params.errorClass;
-    this._element = document.querySelector(params.formSelector); // сама форма
   }
 
   _showInputError(inputElement) {
     const fieldError = document.querySelector(`#${inputElement.id}-error`);
     fieldError.classList.add(this._errorClass);
-    fieldError.textContent = inputElement.message;
+    fieldError.textContent = inputElement.validationMessage;
   }
 
   _hideInputError(inputElement) {
@@ -27,41 +31,38 @@ export default class FormValidator {
     }
   }
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.disabled = true;
-    } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.disabled = false;
-    }
-  }
-
   _setEventListeners() {
-    const inputList = Array.from(
-      this._element.querySelectorAll(this._inputSelector)
-    );
-    const buttonElement = this._element.querySelector(
-      this._submitButtonSelector
-    );
-
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._isValidInput(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this.toggleButtonState();
       });
     });
 
     this._element.addEventListener("invalid", (e) => e.preventDefault(), true);
   }
 
-  enableValidation(params) {
+  /**
+   * Метод, который устанавливает класс кнопки "Сохранить"
+   * в зависимости от текущего состояния
+   * */
+  toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.disabled = true;
+    } else {
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.disabled = false;
+    }
+  }
+
+  enableValidation() {
     this._setEventListeners();
   }
 }

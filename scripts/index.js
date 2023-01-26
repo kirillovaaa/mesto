@@ -1,9 +1,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
-// TODO:
-// 1. Исправить валидацию форм
-
 //
 //
 // Валидаторы форм
@@ -152,20 +149,16 @@ const placeLinkField = placeForm.elements.link;
 function handleOpenPlacePopupButton() {
   placeNameField.value = "";
   placeLinkField.value = "";
-  const popupPlace = document.querySelector("#popup-place");
-  const saveButton = popupPlace.querySelector(".popup__save-button");
-  saveButton.classList.add("popup__save-button_inactive");
-  saveButton.disabled = true;
+  placeFormValidator.toggleButtonState();
   openPopup(placePopup);
 }
 
 /** Обработчик отправки формы нового места */
 function handlePlaceSubmit(e) {
   e.preventDefault();
-  let name = placeForm.elements.name.value;
-  let link = placeForm.elements.link.value;
-  let place = { name, link };
-  renderCard(place);
+  const name = placeForm.elements.name.value;
+  const link = placeForm.elements.link.value;
+  renderCard({ name, link });
   closePopup(placePopup);
 }
 
