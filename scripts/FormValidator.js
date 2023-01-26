@@ -8,16 +8,19 @@ export default class FormValidator {
       params.submitButtonSelector
     );
     this._inactiveButtonClass = params.inactiveButtonClass;
+    this._invalidClass = params.invalidClass;
     this._errorClass = params.errorClass;
   }
 
   _showInputError(inputElement) {
+    inputElement.classList.add(this._invalidClass);
     const fieldError = document.querySelector(`#${inputElement.id}-error`);
     fieldError.classList.add(this._errorClass);
     fieldError.textContent = inputElement.validationMessage;
   }
 
   _hideInputError(inputElement) {
+    inputElement.classList.remove(this._invalidClass);
     const fieldError = document.querySelector(`#${inputElement.id}-error`);
     fieldError.classList.remove(this._errorClass);
     fieldError.textContent = "";
@@ -44,8 +47,10 @@ export default class FormValidator {
         this.toggleButtonState();
       });
     });
+  }
 
-    this._element.addEventListener("invalid", (e) => e.preventDefault(), true);
+  enableValidation() {
+    this._setEventListeners();
   }
 
   /**
@@ -62,7 +67,10 @@ export default class FormValidator {
     }
   }
 
-  enableValidation() {
-    this._setEventListeners();
+  /** Функция, которая снимает все стили ошибок со всех полей */
+  clearErrors() {
+    this._inputList.forEach((input) => {
+      this._hideInputError(input);
+    });
   }
 }

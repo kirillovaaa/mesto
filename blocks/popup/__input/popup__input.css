@@ -13,15 +13,3 @@
   outline: none;
   border-bottom: 1px rgba(0, 0, 0) solid;
 }
-
-.popup__input:invalid {
-  border-bottom: 1px #ff0000 solid;
-}
-
-.popup__input:invalid:required {
-  border-bottom: 1px #ff0000 solid;
-}
-
-::-webkit-validation-bubble-message {
-  content: "ХУЙ";
-}

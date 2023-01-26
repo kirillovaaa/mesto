@@ -13,6 +13,7 @@ const profileFormValidator = new FormValidator({
   submitButtonSelector: ".popup__save-button",
   inactiveButtonClass: "popup__save-button_inactive",
   errorClass: "popup__input-error_active",
+  invalidClass: "popup__input_invalid",
 });
 /** Валидатор формы места */
 const placeFormValidator = new FormValidator({
@@ -21,6 +22,7 @@ const placeFormValidator = new FormValidator({
   submitButtonSelector: ".popup__save-button",
   inactiveButtonClass: "popup__save-button_inactive",
   errorClass: "popup__input-error_active",
+  invalidClass: "popup__input_invalid",
 });
 // Активация валидаторов форм
 profileFormValidator.enableValidation();
@@ -112,9 +114,11 @@ const profileDescriptionField = profileForm.elements.description;
 
 /** Обработчик нажатия на кнопку редактирования профиля */
 function openProfilePopup() {
-  openPopup(profilePopup);
+  profileFormValidator.clearErrors();
   profileNameField.value = profileNameLabel.textContent;
   profileDescriptionField.value = profileDescriptionLabel.textContent;
+  profileFormValidator.toggleButtonState();
+  openPopup(profilePopup);
 }
 
 /** Обработчик отправки формы редактирования профиля */
@@ -140,15 +144,11 @@ const openPlacePopupButton = document.querySelector(".profile__add-button");
 
 /** Форма нового места */
 const placeForm = document.forms.place;
-/** Поле ввода названия места */
-const placeNameField = placeForm.elements.name;
-/** Поле ввода ссылки на изображение */
-const placeLinkField = placeForm.elements.link;
 
 /** Обработчик открытия формы нового места */
 function handleOpenPlacePopupButton() {
-  placeNameField.value = "";
-  placeLinkField.value = "";
+  placeForm.reset();
+  placeFormValidator.clearErrors();
   placeFormValidator.toggleButtonState();
   openPopup(placePopup);
 }
