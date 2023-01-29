@@ -3,33 +3,6 @@ import FormValidator from "./FormValidator.js";
 
 //
 //
-// Валидаторы форм
-//
-
-/** Валидатор формы профиля */
-const profileFormValidator = new FormValidator({
-  formSelector: "#form-profile", // id формы
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  errorClass: "popup__input-error_active",
-  invalidClass: "popup__input_invalid",
-});
-/** Валидатор формы места */
-const placeFormValidator = new FormValidator({
-  formSelector: "#form-place", // id формы
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  errorClass: "popup__input-error_active",
-  invalidClass: "popup__input_invalid",
-});
-// Активация валидаторов форм
-profileFormValidator.enableValidation();
-placeFormValidator.enableValidation();
-
-//
-//
 // Попапы
 //
 
@@ -238,3 +211,26 @@ function renderCard(place) {
 
 // делаем изначальную загрузку мест
 initialPlaces.forEach(renderCard);
+
+//
+//
+// Валидаторы форм
+//
+
+/** конфигурация валидаторов */
+const selectors = {
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_inactive",
+  errorClass: "popup__input-error_active",
+  invalidClass: "popup__input_invalid",
+};
+
+/** Валидатор формы профиля */
+const profileFormValidator = new FormValidator(profileForm, selectors);
+/** Валидатор формы места */
+const placeFormValidator = new FormValidator(placeForm, selectors);
+
+// Активация валидаторов форм
+profileFormValidator.enableValidation();
+placeFormValidator.enableValidation();
