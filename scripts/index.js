@@ -197,16 +197,21 @@ const initialPlaces = [
 /** Элемент сетки с карточками мест */
 const places = document.querySelector(".places");
 
-/** Функция отрисовки карточки */
-function renderCard(place) {
-  const card = new Card(
+/** Функция создания карточки */
+function createCard(place) {
+  return new Card(
     "#place-card-template",
     place.name,
     place.link,
     onCardClick
-  );
-  // добавляем карточку в начало сетки
-  places.prepend(card.generateCard());
+  ).generateCard();
+}
+
+/** Функция, которая вставляет карточку в DOM */
+function renderCard(place) {
+  const card = createCard(place);
+  // вставляем карточку в DOM
+  places.prepend(card);
 }
 
 // делаем изначальную загрузку мест
