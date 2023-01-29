@@ -38,7 +38,7 @@ const profilePopup = document.querySelector("#popup-profile");
 /** Попап с формой добавления места */
 const placePopup = document.querySelector("#popup-place");
 /** Попап с картинкой */
-export const imagePopup = document.querySelector("#popup-image");
+const imagePopup = document.querySelector("#popup-image");
 
 /** Обработчик нажатия на кнопку Esc */
 function handlePressEsc(e) {
@@ -48,7 +48,7 @@ function handlePressEsc(e) {
   }
 }
 /** Функция открытия попапа */
-export function openPopup(popupElement) {
+function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
   document.addEventListener("keydown", handlePressEsc);
 }
@@ -169,6 +169,27 @@ placeForm.addEventListener("submit", handlePlaceSubmit);
 
 //
 //
+// Попап с картинкой
+//
+
+/** Картинка в попапе */
+const imagePopupImageElement = imagePopup.querySelector(".popup__image");
+/** Подпись картинки в попапе */
+const imagePopupDescriptionElement = imagePopup.querySelector(
+  ".popup__image-description"
+);
+
+/** Функция, которую передаем в карточку при инициализации */
+function onCardClick(name, link) {
+  // меняем адрес картинки и подпись
+  imagePopupImageElement.alt = name;
+  imagePopupImageElement.src = link;
+  imagePopupDescriptionElement.textContent = this._title;
+  openPopup(imagePopup);
+}
+
+//
+//
 // Сетка карточек
 //
 
@@ -205,7 +226,12 @@ const places = document.querySelector(".places");
 
 /** Функция отрисовки карточки */
 function renderCard(place) {
-  const card = new Card("#place-card-template", place.name, place.link);
+  const card = new Card(
+    "#place-card-template",
+    place.name,
+    place.link,
+    onCardClick
+  );
   // добавляем карточку в начало сетки
   places.prepend(card.generateCard());
 }

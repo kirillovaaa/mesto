@@ -1,10 +1,9 @@
-import { imagePopup, openPopup } from "./index.js";
-
 export default class Card {
-  constructor(templateSelector, title, imageLink) {
+  constructor(templateSelector, title, imageLink, onClick) {
     this._templateSelector = templateSelector;
     this._title = title;
     this._imageLink = imageLink;
+    this._onClick = onClick;
   }
 
   _getTemplate() {
@@ -17,19 +16,7 @@ export default class Card {
   }
 
   _handleImageClick() {
-    /** Картинка в попапе */
-    const popupImageElement = imagePopup.querySelector(".popup__image");
-    popupImageElement.alt = this._title;
-    popupImageElement.src = this._imageLink;
-    /** Подпись картинки в попапе */
-    const popupImageDescriptionElement = imagePopup.querySelector(
-      ".popup__image-description"
-    );
-    popupImageDescriptionElement.textContent = this._title;
-
-    // используем импортированные сюда из index.js функцию openPopup
-    // и сам попап с изображением
-    openPopup(imagePopup);
+    this._onClick(this._title, this._imageLink);
   }
 
   _handleDeleteButtonClick() {
