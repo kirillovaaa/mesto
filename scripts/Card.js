@@ -1,9 +1,9 @@
 export default class Card {
-  constructor(templateSelector, title, imageLink, onClick) {
+  constructor(templateSelector, title, imageLink, handleCardClick) {
     this._templateSelector = templateSelector;
     this._title = title;
     this._imageLink = imageLink;
-    this._onClick = onClick;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -16,7 +16,7 @@ export default class Card {
   }
 
   _handleImageClick() {
-    this._onClick(this._title, this._imageLink);
+    this._handleCardClick(this._title, this._imageLink);
   }
 
   _handleDeleteButtonClick() {
