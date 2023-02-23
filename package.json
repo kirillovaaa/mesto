@@ -17,13 +17,15 @@
     "url": "https://github.com/kirillovaaa/mesto/issues"
   },
   "homepage": "https://github.com/kirillovaaa/mesto#readme",
+  "dependencies": {
+    "core-js": "^3.28.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
-    "core-js": "^3.28.0",
     "css-loader": "^6.7.3",
     "cssnano": "^5.1.15",
     "html-webpack-plugin": "^5.5.0",
