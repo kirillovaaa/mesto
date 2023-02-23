@@ -3,14 +3,16 @@ export default class Section {
     this._items = items;
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
-    this.renderElements();
   }
 
-  renderElements() {}
+  renderElements() {
+    this._items.forEach((item) => {
+      const card = this._renderer(item);
+      this.addItem(card);
+    });
+  }
 
   addItem(element) {
-    this._container.append(element);
+    this._container.prepend(element);
   }
 }
-
-const section = new Section({ items: [], renderer: () => {} }, ".someSelector");
