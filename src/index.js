@@ -95,8 +95,8 @@ function openProfilePopup() {
 }
 
 /** Обработчик отправки формы редактирования профиля */
-function onProfileSubmit(fields) {
-  user.setUserInfo(fields[0], fields[1]);
+function onProfileSubmit(values) {
+  user.setUserInfo(values.name, values.description);
 }
 
 /** Слушатель нажатия на кнопку редактирования профиля */
@@ -116,8 +116,8 @@ function handleOpenPlacePopupButton() {
 
 /** Обработчик отправки формы нового места */
 function onPlaceSubmit(values) {
-  const name = values[0];
-  const link = values[1];
+  const name = values.name;
+  const link = values.link;
   gridSection.addItem(renderCard({ name, link }));
   placePopup.close();
 }
