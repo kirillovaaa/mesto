@@ -3,22 +3,28 @@ import Popup from "./Popup.js";
 export default class PopupWithForm extends Popup {
   constructor(popupId, onSubmit) {
     super(popupId);
-    this._onSubmit = onSubmit;
     this._form = this._element.querySelector(".popup__form");
+    this._onSubmit = onSubmit;
   }
 
-  _getInputValues() {
-    // собирает данные всех полей формы
+  _getInputValues(e) {
+    return [e.target[0].value, e.target[1].value];
+  }
+
+  _handleSubmit(e) {
+    e.preventDefault();
+    const values = this._getInputValues(e);
+    this._onSubmit(values);
+    this.close();
   }
 
   setEventListeners() {
     super.setEventListeners();
-    // должен не только добавлять обработчик клика иконке закрытия,
-    // но и добавлять обработчик сабмита формы
+    this._form.addEventListener("submit", this._handleSubmit.bind(this));
   }
 
   close() {
     super.close();
-    // при закрытии попапа форма должна ещё и сбрасываться
+    this._form.reset();
   }
 }
