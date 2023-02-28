@@ -44,6 +44,10 @@ const gridSection = new Section(
 );
 
 // Попапы
+
+// const deletePopup = new PopupDeleteForm("#popup-delete",  onDeleteSubmit);
+// deletePopup.setEventListeners();
+
 const profilePopup = new PopupWithForm("#popup-profile", onProfileSubmit);
 profilePopup.setEventListeners();
 
@@ -64,6 +68,10 @@ const placeForm = document.forms.place;
 
 /** Кнопка открытия формы новой карточки */
 const openPlacePopupButton = document.querySelector(".profile__add-button");
+
+// !NEW!
+// Кнопка открытия формы удаления
+// const openDeletePopupButton = document.querySelector(".places__delete-button");
 
 // Валидаторы
 const selectors = {
@@ -122,8 +130,18 @@ function onPlaceSubmit(values) {
   placePopup.close();
 }
 
+// // Обработчик открытия формы удаления карточки
+// function handleOpenDeleteCardButton() {
+// }
+
+// // Обработчик отправки формы удаления карточки
+// function onDeleteSubmit() {
+// }
+
 /** Слушатель */
 openPlacePopupButton.addEventListener("click", handleOpenPlacePopupButton);
+
+// openDeletePopupButton.addEventListener("click", handleOpenDeleteCardButton);
 
 //
 //
