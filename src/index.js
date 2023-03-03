@@ -4,49 +4,33 @@ import Section from "./scripts/Section.js";
 import PopupWithImage from "./scripts/PopupWithImage.js";
 import PopupWithForm from "./scripts/PopupWithForm.js";
 import UserInfo from "./scripts/UserInfo.js";
+import Api from "./scripts/Api.js";
 import "./pages/index.css";
 
-/** Места, которые будут загружаться изначально */
-const initialPlaces = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 /** Структура данных пользователя */
-const user = new UserInfo(".profile__name", ".profile__description");
-
-/** Элемент сетки с карточками мест */
-const gridSection = new Section(
-  { items: initialPlaces, renderer: renderCard },
-  ".places"
+const user = new UserInfo(
+  ".profile__avatar",
+  ".profile__name",
+  ".profile__description"
 );
+
+let gridSection = null;
+
+let deleteCardId = null;
+let removeCard = null;
+
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-60",
+  headers: {
+    authorization: "7cc35801-29be-4380-959c-1a6e60ca73ce",
+    "Content-Type": "application/json",
+  },
+});
 
 // Попапы
 
-// const deletePopup = new PopupDeleteForm("#popup-delete",  onDeleteSubmit);
-// deletePopup.setEventListeners();
+const deletePopup = new PopupWithForm("#popup-delete", onDeleteSubmit);
+deletePopup.setEventListeners();
 
 const profilePopup = new PopupWithForm("#popup-profile", onProfileSubmit);
 profilePopup.setEventListeners();
@@ -54,13 +38,16 @@ profilePopup.setEventListeners();
 const placePopup = new PopupWithForm("#popup-place", onPlaceSubmit);
 placePopup.setEventListeners();
 
+const avatarPopup = new PopupWithForm("#popup-avatar", onAvatarSubmit);
+avatarPopup.setEventListeners();
+
 const imagePopup = new PopupWithImage("#popup-image");
 imagePopup.setEventListeners();
 
 /** Форма профиля */
 const profileForm = document.forms.profile;
 const profileNameField = profileForm.elements.name;
-const profileDescriptionField = profileForm.elements.description;
+const profileDescriptionField = profileForm.elements.about;
 const openProfileFormButton = document.querySelector(".profile__edit-button");
 
 /** Форма нового места */
@@ -69,9 +56,14 @@ const placeForm = document.forms.place;
 /** Кнопка открытия формы новой карточки */
 const openPlacePopupButton = document.querySelector(".profile__add-button");
 
-// !NEW!
-// Кнопка открытия формы удаления
-// const openDeletePopupButton = document.querySelector(".places__delete-button");
+/** Кнопка открытия формы аватара */
+const openAvatarPopupButton = document.querySelector(".profile__avatar-edit");
+
+/** Форма аватара */
+const avatarForm = document.forms.avatar;
+
+/** Форма удаления карточки */
+const deleteCardForm = document.forms.delete;
 
 // Валидаторы
 const selectors = {
@@ -83,10 +75,93 @@ const selectors = {
 };
 const profileFormValidator = new FormValidator(profileForm, selectors);
 const placeFormValidator = new FormValidator(placeForm, selectors);
+const avatarFormValidator = new FormValidator(avatarForm, selectors);
+const deleteCardFormValidator = new FormValidator(deleteCardForm, selectors);
 
 // Активация валидаторов форм
 profileFormValidator.enableValidation();
 placeFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
+
+// предзагрузка пользователя
+api.getMe().then((res) => {
+  /** Сохранить данные пользователя */
+  user.initializeUser(res._id, res.avatar, res.name, res.about);
+});
+
+//
+//
+// Сетка карточек
+//
+
+/** Функция, которую передаем в карточку при инициализации */
+function onCardClick(name, link) {
+  imagePopup.open(name, link);
+}
+
+function onCardLike(place) {
+  const method = place.likes.find((like) => like._id === user._id)
+    ? api.removeLike
+    : api.addLike;
+
+  return method(place._id);
+}
+
+function onCardDelete(cardId, remove) {
+  deleteCardId = cardId;
+  removeCard = remove;
+  deletePopup.open();
+}
+
+function onDeleteSubmit() {
+  deleteCardFormValidator.setButtonText("Удаление...");
+  api.removeCard(deleteCardId).then(() => {
+    removeCard();
+    deleteCardFormValidator.setButtonText("Да");
+  });
+}
+
+/** Функция создания карточки */
+function renderCard(place) {
+  return new Card(
+    "#place-card-template",
+    place,
+    user._id,
+    onCardClick,
+    onCardLike,
+    onCardDelete
+  ).generateCard();
+}
+
+/** Места, которые будут загружаться изначально */
+api.getInitialCards().then((result) => {
+  /** Элемент сетки с карточками мест */
+  gridSection = new Section({ items: result, renderer: renderCard }, ".places");
+  gridSection.renderElements();
+});
+
+//
+//
+// Аватар
+//
+
+function handleOpenAvatarPopup() {
+  avatarFormValidator.clearErrors();
+  avatarFormValidator.toggleButtonState();
+  avatarPopup.open();
+}
+
+/** Обработчик отправки формы редактирования профиля */
+function onAvatarSubmit(values) {
+  avatarFormValidator.setButtonText("Сохранение...");
+  api.updateAvatar(values.link).then((res) => {
+    user.setAvatar(res.avatar);
+    avatarFormValidator.setButtonText("Сохранить");
+  });
+}
+
+/** Слушатель нажатия на кнопку открытия формы аватара */
+openAvatarPopupButton.addEventListener("click", handleOpenAvatarPopup);
 
 //
 //
@@ -95,16 +170,20 @@ placeFormValidator.enableValidation();
 
 /** Обработчик нажатия на кнопку редактирования профиля */
 function openProfilePopup() {
-  const { name, description } = user.getUserInfo();
+  const { name, about } = user.getUserInfo();
   profileNameField.value = name;
-  profileDescriptionField.value = description;
+  profileDescriptionField.value = about;
   profileFormValidator.toggleButtonState();
   profilePopup.open();
 }
 
 /** Обработчик отправки формы редактирования профиля */
 function onProfileSubmit(values) {
-  user.setUserInfo(values.name, values.description);
+  profileFormValidator.setButtonText("Сохранение...");
+  api.updateProfile(values.name, values.about).then((res) => {
+    user.setUserInfo(res.name, res.about);
+    profileFormValidator.setButtonText("Сохранить");
+  });
 }
 
 /** Слушатель нажатия на кнопку редактирования профиля */
@@ -124,49 +203,12 @@ function handleOpenPlacePopupButton() {
 
 /** Обработчик отправки формы нового места */
 function onPlaceSubmit(values) {
-  const name = values.name;
-  const link = values.link;
-  gridSection.addItem(renderCard({ name, link }));
-  placePopup.close();
+  placeFormValidator.setButtonText("Сохранение...");
+  api.addCard(values.name, values.link).then((res) => {
+    gridSection.addItem(renderCard(res));
+    placeFormValidator.setButtonText("Сохранить");
+  });
 }
-
-// // Обработчик открытия формы удаления карточки
-// function handleOpenDeleteCardButton() {
-// }
-
-// // Обработчик отправки формы удаления карточки
-// function onDeleteSubmit() {
-// }
 
 /** Слушатель */
 openPlacePopupButton.addEventListener("click", handleOpenPlacePopupButton);
-
-// openDeletePopupButton.addEventListener("click", handleOpenDeleteCardButton);
-
-//
-//
-// Попап с картинкой
-//
-
-/** Функция, которую передаем в карточку при инициализации */
-function onCardClick(name, link) {
-  imagePopup.open(name, link);
-}
-
-//
-//
-// Сетка карточек
-//
-
-/** Функция создания карточки */
-function renderCard(place) {
-  return new Card(
-    "#place-card-template",
-    place.name,
-    place.link,
-    onCardClick
-  ).generateCard();
-}
-
-// делаем изначальную загрузку мест
-gridSection.renderElements();

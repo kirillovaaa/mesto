@@ -1,18 +1,29 @@
 export default class UserInfo {
-  constructor(nameSelector, descriptionSelector) {
-    this._name = document.querySelector(nameSelector);
-    this._description = document.querySelector(descriptionSelector);
+  constructor(avatarSelector, nameSelector, descriptionSelector) {
+    this._avatarElement = document.querySelector(avatarSelector);
+    this._nameElement = document.querySelector(nameSelector);
+    this._descriptionElement = document.querySelector(descriptionSelector);
   }
 
   getUserInfo() {
     return {
-      name: this._name.textContent,
-      description: this._description.textContent,
+      name: this._nameElement.textContent,
+      about: this._descriptionElement.textContent,
     };
   }
 
-  setUserInfo(name, description) {
-    this._name.textContent = name;
-    this._description.textContent = description;
+  initializeUser(id, avatar, name, about) {
+    this._id = id;
+    this.setAvatar(avatar);
+    this.setUserInfo(name, about);
+  }
+
+  setAvatar(imageSrc) {
+    this._avatarElement.src = imageSrc;
+  }
+
+  setUserInfo(name, about) {
+    this._nameElement.textContent = name;
+    this._descriptionElement.textContent = about;
   }
 }
