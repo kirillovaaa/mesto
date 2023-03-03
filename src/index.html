@@ -20,7 +20,11 @@
     <main>
       <!-- попап с формой редактирования аватара -->
       <div class="popup" id="popup-avatar">
-        <form id="form-avatar" class="popup__form" name="avatar">
+        <form
+          id="form-avatar"
+          class="popup__form popup__form-avatar"
+          name="avatar"
+        >
           <h2 class="popup__heading">Обновить аватар</h2>
 
           <div class="popup__input-wrapper">
@@ -77,7 +81,7 @@
               id="edit-description-field"
               class="popup__input"
               type="text"
-              name="description"
+              name="about"
               placeholder="О себе"
               minlength="2"
               maxlength="200"
@@ -105,7 +109,11 @@
 
       <!-- попап с формой удаления карточки -->
       <div class="popup" id="popup-delete">
-        <form id="form-delete" class="popup__form" name="delete">
+        <form
+          id="form-delete"
+          class="popup__form popup__delete-form"
+          name="delete"
+        >
           <h2 class="popup__heading">Вы уверены?</h2>
           <button type="submit" class="popup__save-button">Да</button>
           <button
@@ -209,7 +217,7 @@
         </div>
         <div class="profile__info">
           <div class="profile__heading">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button type="button" class="profile__edit-button">
               <img
                 class="profile__edit-icon"
@@ -218,7 +226,7 @@
               />
             </button>
           </div>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description"></p>
         </div>
         <button class="profile__add-button" type="button">
           <img
@@ -238,7 +246,13 @@
           <img class="places__image" />
           <div class="places__name-wrapper">
             <h2 class="places__name"></h2>
-            <button type="button" class="places__fav-button"></button>
+            <button type="button" class="places__fav-button">
+              <img
+                class="places__fav-image"
+                src="<%=require('./images/heart-stroke.svg')%>"
+              />
+              <span class="places__fav-likes"></span>
+            </button>
           </div>
           <button type="button" class="places__delete-button">
             <img

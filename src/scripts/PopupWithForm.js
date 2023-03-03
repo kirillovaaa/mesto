@@ -20,7 +20,7 @@ export default class PopupWithForm extends Popup {
 
   _handleSubmit(e) {
     e.preventDefault();
-    const values = this._getInputValues(e);
+    const values = this._getInputValues();
     this._onSubmit(values);
     this.close();
   }
