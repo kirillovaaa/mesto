@@ -67,11 +67,6 @@ export default class FormValidator {
     }
   }
 
-  /** Метод, который устанавливает текст кнопки */
-  setButtonText(text) {
-    this._buttonElement.innerText = text;
-  }
-
   /** Функция, которая снимает все стили ошибок со всех полей */
   clearErrors() {
     this._inputList.forEach((input) => {

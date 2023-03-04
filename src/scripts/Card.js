@@ -27,35 +27,25 @@ export default class Card {
     return cardElement;
   }
 
-  _setLikeCount(count) {
-    this._likesCountElement.textContent = count;
-  }
-
-  _setLikeImage(isLiked) {
-    this._likeImageElement.src = isLiked ? likeActive : likeInactive;
-  }
-
   _handleImageClick() {
     this._handleCardClick(this._place.name, this._place.link);
   }
 
   _handleDeleteButtonClick() {
-    this._handleDelete(this._place._id, this._remove.bind(this));
+    this._handleDelete(this);
   }
 
   _handleFavClick() {
-    this._handleLike(this._place).then((res) => {
-      this._place = res;
-      const isLiked = res.likes.find((like) => like._id === this._userId);
-      const likesCount = res.likes.length;
-      this._setLikeImage(isLiked);
-      this._setLikeCount(likesCount);
-    });
+    this._handleLike(this);
   }
 
-  _remove() {
-    this._element.remove();
-    this._element = null;
+  _renderLikesCount() {
+    this._likesCountElement.textContent = this._place.likes.length;
+  }
+
+  _renderLikeImage() {
+    const isLiked = this.checkUserLike();
+    this._likeImageElement.src = isLiked ? likeActive : likeInactive;
   }
 
   _setEventListeners() {
@@ -106,15 +96,11 @@ export default class Card {
     /** Заголовок в карточке класса */
     this._titleElement.textContent = this._place.name; // задаем название места
 
-    /** Количество лайков */
-    this._setLikeCount(this._place.likes.length);
-
     /** Подсветим пользовательский лайк */
-    if (this._place.likes.find((like) => like._id === this._userId)) {
-      this._setLikeImage(true);
-    } else {
-      this._setLikeImage(false);
-    }
+    this._renderLikeImage();
+
+    /** Количество лайков */
+    this._renderLikesCount();
 
     /** Скрыть кнопку удаления карточки, если карточка другого пользователя */
     if (this._place.owner._id !== this._userId) {
@@ -125,5 +111,24 @@ export default class Card {
     this._setEventListeners();
 
     return this._element;
+  }
+
+  getPlace() {
+    return this._place;
+  }
+
+  checkUserLike() {
+    return this._place.likes.find((like) => like._id === this._userId);
+  }
+
+  setLikes(likes) {
+    this._place.likes = likes;
+    this._renderLikeImage();
+    this._renderLikesCount();
+  }
+
+  remove() {
+    this._element.remove();
+    this._element = null;
   }
 }

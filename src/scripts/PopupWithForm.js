@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this._inputList = Array.from(
       this._element.querySelectorAll(".popup__input")
     );
+    this._buttonElement = this._form.querySelector(".popup__save-button");
     this._onSubmit = onSubmit;
   }
 
@@ -28,6 +29,11 @@ export default class PopupWithForm extends Popup {
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", this._handleSubmit.bind(this));
+  }
+
+  /** Метод, который устанавливает текст кнопки */
+  setButtonText(text) {
+    this._buttonElement.innerText = text;
   }
 
   close() {
