@@ -127,7 +127,7 @@ export default class Card {
     this._renderLikesCount();
   }
 
-  remove() {
+  removeElement() {
     this._element.remove();
     this._element = null;
   }

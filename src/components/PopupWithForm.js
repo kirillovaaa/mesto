@@ -23,7 +23,6 @@ export default class PopupWithForm extends Popup {
     e.preventDefault();
     const values = this._getInputValues();
     this._onSubmit(values);
-    this.close();
   }
 
   setEventListeners() {

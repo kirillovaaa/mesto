@@ -1,12 +1,12 @@
-import Card from "./scripts/Card.js";
-import FormValidator from "./scripts/FormValidator.js";
-import Section from "./scripts/Section.js";
-import PopupWithImage from "./scripts/PopupWithImage.js";
-import PopupWithForm from "./scripts/PopupWithForm.js";
-import PopupWithConfirmation from "./scripts/PopupWithConfirmation.js";
-import UserInfo from "./scripts/UserInfo.js";
-import Api from "./scripts/Api.js";
-import "./pages/index.css";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PicturePopup from "../components/PicturePopup.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
+import "./index.css";
 
 /** Структура данных пользователя */
 const user = new UserInfo(
@@ -42,7 +42,7 @@ popupPlace.setEventListeners();
 const popupAvatar = new PopupWithForm("#popup-avatar", handleAvatarSubmit);
 popupAvatar.setEventListeners();
 
-const popupImage = new PopupWithImage("#popup-image");
+const popupImage = new PicturePopup("#popup-image");
 popupImage.setEventListeners();
 
 /** Форма профиля */
@@ -110,10 +110,13 @@ function handleDeleteSubmit(card) {
   api
     .removeCard(_id)
     .then(() => {
-      card.remove();
-      popupDelete.setButtonText("Да");
+      card.removeElement();
+      popupDelete.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      popupDelete.setButtonText("Да");
+    });
 }
 
 /** Функция создания карточки */
@@ -153,9 +156,12 @@ function handleAvatarSubmit(values) {
     .updateAvatar(values.link)
     .then((res) => {
       user.setAvatar(res.avatar);
-      popupAvatar.setButtonText("Сохранить");
+      popupAvatar.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      popupAvatar.setButtonText("Сохранить");
+    });
 }
 
 /** Слушатель нажатия на кнопку открытия формы аватара */
@@ -182,9 +188,12 @@ function handleProfileSubmit(values) {
     .updateProfile(values.name, values.about)
     .then((res) => {
       user.setUserInfo(res.name, res.about);
-      popupProfile.setButtonText("Сохранить");
+      popupProfile.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      popupProfile.setButtonText("Сохранить");
+    });
 }
 
 /** Слушатель нажатия на кнопку редактирования профиля */
@@ -209,9 +218,12 @@ function handlePlaceSubmit(values) {
     .addCard(values.name, values.link)
     .then((res) => {
       gridSection.addItem(renderCard(res));
-      popupPlace.setButtonText("Сохранить");
+      popupPlace.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      popupPlace.setButtonText("Сохранить");
+    });
 }
 
 /** Слушатель */
